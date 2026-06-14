@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { DashboardComponent } from './components/dashbaord/dashboard.component';
-import { RegisterComponent } from './components/register/register.component';
-import { authGuard } from './gaurds/auth.gaurd';
+import { LoginComponent } from './features/auth/login/login.component';
+// import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { RegisterComponent } from './features/auth/register/register.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -18,11 +18,11 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
   },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [authGuard]
-  },
+  // {
+  //   path: 'dashboard',
+  //   component: DashboardComponent,
+  //   canActivate: [authGuard]
+  // },
   {
     path: '**',
     redirectTo: 'login',

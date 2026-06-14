@@ -4,8 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-aurora-background',
   standalone: true,
   imports: [],
-  templateUrl: './aurora-background.html',
-  styleUrl: './aurora-background.css',
+  templateUrl: './aurora-background.component.html',
+  styleUrl: './aurora-background.component.css',
 })
 export class AuroraBackground {
 
