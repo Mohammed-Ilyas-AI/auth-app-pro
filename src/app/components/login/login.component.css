@@ -2,7 +2,9 @@
 
   position: relative;
 
-  border-radius: 36px;
+  overflow: hidden;
+
+  backdrop-filter: blur(30px);
 
   background:
     linear-gradient(
@@ -11,18 +13,19 @@
       rgba(255,255,255,.04)
     );
 
-  backdrop-filter:
-    blur(40px);
-
   border:
-    1px solid rgba(255,255,255,.12);
+    1px solid rgba(255,255,255,.15);
 
   box-shadow:
-    0 30px 100px rgba(0,0,0,.5),
-    inset 0 1px 1px rgba(255,255,255,.2);
+
+    0 20px 80px rgba(0,0,0,.4),
+
+    inset 0 1px 0 rgba(255,255,255,.2),
+
+    inset 0 -1px 0 rgba(255,255,255,.05);
 
   transition:
-    transform .3s ease;
+    transform .15s ease-out;
 }
 
 .neural-card:hover {
@@ -144,5 +147,16 @@
 
   to {
     background-position: 100%;
+  }
+}
+
+@keyframes borderFlow {
+
+  0% {
+    background-position: 0%;
+  }
+
+  100% {
+    background-position: 400%;
   }
 }
