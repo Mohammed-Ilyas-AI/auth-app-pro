@@ -1,112 +1,120 @@
-import { Injectable, signal } from '@angular/core';
-import { Observable, of, delay, tap } from 'rxjs';
+import { Injectable, signal, computed } from '@angular/core';
 import { User } from '../models/user.model';
+import { LoginRequest } from '../models/login-request.model';
+import { RegisterRequest } from '../models/register-request.model';
+import { StorageService } from './storage.service';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  readonly currentUser = signal<User | null>(null);
 
-  readonly isLoggedIn = signal(false);
+  readonly isAuthenticated = computed(() => this.currentUser() !== null);
 
-  readonly currentUser =
-    signal<User | null>(null);
+  readonly isLoading = signal(false);
 
-  readonly isLoading =
-    signal(false);
-
-  constructor() {
+  constructor(private readonly storageService: StorageService) {
     this.restoreSession();
   }
 
-  private restoreSession(): void {
+  register(request: RegisterRequest): {
+    success: boolean;
+    message: string;
+  } {
+    const users = this.storageService.getItem<User[]>(STORAGE_KEYS.USERS) || [];
 
-    const user =
-      localStorage.getItem('auth_user');
+    const existingUser = users.find(
+      (user) => user.email.toLowerCase() === request.email.toLowerCase(),
+    );
 
-    if (user) {
-
-      this.currentUser.set(
-        JSON.parse(user)
-      );
-
-      this.isLoggedIn.set(true);
+    if (existingUser) {
+      return {
+        success: false,
+        message: 'User already exists',
+      };
     }
+
+    const newUser: User = {
+      id: crypto.randomUUID(),
+      fullName: request.fullName,
+      email: request.email,
+      password: request.password,
+      createdAt: new Date().toISOString(),
+    };
+
+    users.push(newUser);
+
+    this.storageService.setItem(STORAGE_KEYS.USERS, users);
+
+    return {
+      success: true,
+      message: 'Registration successful',
+    };
   }
 
-  login(
-    email: string,
-    password: string
-  ): Observable<User> {
+  login(request: LoginRequest): {
+    success: boolean;
+    message: string;
+    user?: User;
+  } {
+    const users = this.storageService.getItem<User[]>(STORAGE_KEYS.USERS) || [];
 
-    this.isLoading.set(true);
-
-    return of({
-      id: crypto.randomUUID(),
-      email,
-      firstName: 'Ilyas'
-    }).pipe(
-
-      delay(1000),
-
-      tap(user => {
-
-        localStorage.setItem(
-          'auth_user',
-          JSON.stringify(user)
-        );
-
-        this.currentUser.set(user);
-
-        this.isLoggedIn.set(true);
-
-        this.isLoading.set(false);
-      })
+    const user = users.find(
+      (item) =>
+        item.email.toLowerCase() === request.email.toLowerCase() &&
+        item.password === request.password,
     );
-  }
 
-  register(
-    payload: {
-      firstName: string;
-      email: string;
-      password: string;
+    if (!user) {
+      return {
+        success: false,
+        message: 'Invalid email or password',
+      };
     }
-  ): Observable<User> {
 
-    this.isLoading.set(true);
+    const updatedUser: User = {
+      ...user,
+      lastLogin: new Date().toISOString(),
+    };
 
-    return of({
-      id: crypto.randomUUID(),
-      firstName: payload.firstName,
-      email: payload.email
-    }).pipe(
+    const updatedUsers = users.map((item) => (item.id === updatedUser.id ? updatedUser : item));
 
-      delay(1000),
+    this.storageService.setItem(STORAGE_KEYS.USERS, updatedUsers);
 
-      tap(user => {
+    this.currentUser.set(updatedUser);
 
-        localStorage.setItem(
-          'auth_user',
-          JSON.stringify(user)
-        );
+    if (request.rememberMe) {
+      this.storageService.setItem(STORAGE_KEYS.CURRENT_USER, updatedUser);
+    }
 
-        this.currentUser.set(user);
-
-        this.isLoggedIn.set(true);
-
-        this.isLoading.set(false);
-      })
-    );
+    return {
+      success: true,
+      message: 'Login successful',
+      user: updatedUser,
+    };
   }
 
   logout(): void {
-
-    localStorage.removeItem(
-      'auth_user'
-    );
-
     this.currentUser.set(null);
 
-    this.isLoggedIn.set(false);
+    this.storageService.removeItem(STORAGE_KEYS.CURRENT_USER);
+  }
+
+  restoreSession(): void {
+    const savedUser = this.storageService.getItem<User>(STORAGE_KEYS.CURRENT_USER);
+
+    if (savedUser) {
+      this.currentUser.set(savedUser);
+    }
+  }
+
+  getCurrentUser(): User | null {
+    return this.currentUser();
+  }
+
+  getUsers(): User[] {
+    return this.storageService.getItem<User[]>(STORAGE_KEYS.USERS) || [];
   }
 }

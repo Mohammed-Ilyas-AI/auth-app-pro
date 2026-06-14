@@ -1,0 +1,71 @@
+<div class="dashboard-container">
+
+    <div class="dashboard-card">
+
+        <div class="header">
+
+            <h1>
+                Welcome Back
+            </h1>
+
+            <button class="logout-btn" (click)="logout()">
+                Logout
+            </button>
+
+        </div>
+
+        <div class="info-grid">
+
+            <div class="info-card">
+
+                <span class="label">
+                    Full Name
+                </span>
+
+                <span class="value">
+                    {{ authService.currentUser()?.fullName }}
+                </span>
+
+            </div>
+
+            <div class="info-card">
+
+                <span class="label">
+                    Email
+                </span>
+
+                <span class="value">
+                    {{ authService.currentUser()?.email }}
+                </span>
+
+            </div>
+
+            <div class="info-card">
+
+                <span class="label">
+                    Theme
+                </span>
+
+                <span class="value">
+                    {{ themeService.theme() }}
+                </span>
+
+            </div>
+
+            <div class="info-card">
+
+                <span class="label">
+                    Last Login
+                </span>
+
+                <span class="value">
+                    {{ authService.currentUser()?.lastLogin || 'First Login' }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

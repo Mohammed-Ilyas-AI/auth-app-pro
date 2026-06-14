@@ -13,8 +13,7 @@
     <div class="p-12">
       <div class="mb-10 text-center">
         <h1
-          class="orbitron text-6xl font-black tracking-widest bg-linear-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
-        >
+          class="orbitron text-6xl font-black tracking-widest bg-linear-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
           AUTH PRO
         </h1>
 
@@ -27,17 +26,10 @@
         <div>
           <label class="mb-3 block text-sm font-semibold text-slate-300"> Email </label>
 
-          <input
-            type="email"
-            formControlName="email"
-            placeholder="you@example.com"
-            class="neural-input"
-          />
+          <input type="email" formControlName="email" placeholder="you@example.com" class="neural-input" />
 
-          <p
-            *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
-            class="mt-2 text-sm text-red-400"
-          >
+          <p *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+            class="mt-2 text-sm text-red-400">
             Enter a valid email address.
           </p>
         </div>
@@ -48,37 +40,35 @@
           <label class="mb-3 block text-sm font-semibold text-slate-300"> Password </label>
 
           <div class="relative">
-            <input
-              [type]="showPassword ? 'text' : 'password'"
-              formControlName="password"
-              placeholder="Enter password"
-              class="neural-input pr-20"
-            />
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Enter password"
+              class="neural-input pr-20" />
 
-            <button
-              type="button"
-              (click)="togglePassword()"
-              class="absolute right-5 top-1/2 -translate-y-1/2 text-cyan-400 font-semibold"
-            >
+            <button type="button" (click)="togglePassword()"
+              class="absolute right-5 top-1/2 -translate-y-1/2 text-cyan-400 font-semibold">
               {{ showPassword ? 'Hide' : 'Show' }}
             </button>
           </div>
 
-          <p
-            *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
-            class="mt-2 text-sm text-red-400"
-          >
+          <p *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+            class="mt-2 text-sm text-red-400">
             Password must be at least 8 characters.
           </p>
         </div>
 
-        <div
-          *ngIf="errorMessage"
-          class="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-300"
-        >
+        <div *ngIf="errorMessage" class="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-300">
           {{ errorMessage }}
         </div>
+        <div class="flex items-center justify-between">
 
+          <label class="flex items-center gap-3 text-slate-300">
+
+            <input type="checkbox" formControlName="rememberMe" class="h-4 w-4" />
+
+            Remember Me
+
+          </label>
+
+        </div>
         <button type="submit" [disabled]="authService.isLoading()" class="ignite-button">
           <div class="button-energy" [class.active]="buttonState !== 'idle'"></div>
 

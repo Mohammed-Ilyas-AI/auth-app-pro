@@ -1,0 +1,173 @@
+<app-aurora-background></app-aurora-background>
+
+<app-floating-particles></app-floating-particles>
+
+<app-theme-toggle></app-theme-toggle>
+
+<app-mouse-spotlight></app-mouse-spotlight>
+
+<div class="relative z-10 flex min-h-screen items-center justify-center px-6">
+  <div appTilt class="neural-card w-full max-w-xl overflow-hidden">
+
+    <div class="glow-line"></div>
+
+    <div class="p-12">
+
+      <div class="mb-10 text-center">
+        <h1
+          class="orbitron text-5xl font-black tracking-widest bg-linear-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
+        >
+          AUTH PRO
+        </h1>
+
+        <p class="mt-4 text-lg text-slate-300">
+          Create Your Neural Identity
+        </p>
+      </div>
+
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)="onSubmit()"
+        class="space-y-6"
+      >
+
+        <!-- FULL NAME -->
+
+        <div>
+          <label class="mb-3 block text-sm font-semibold text-slate-300">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            formControlName="fullName"
+            placeholder="Mohammed Ilyas"
+            class="neural-input"
+          />
+
+          <p
+            *ngIf="registerForm.get('fullName')?.touched &&
+                   registerForm.get('fullName')?.invalid"
+            class="mt-2 text-sm text-red-400"
+          >
+            Full Name is required.
+          </p>
+        </div>
+
+        <!-- EMAIL -->
+
+        <div>
+          <label class="mb-3 block text-sm font-semibold text-slate-300">
+            Email
+          </label>
+
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="you@example.com"
+            class="neural-input"
+          />
+
+          <p
+            *ngIf="registerForm.get('email')?.touched &&
+                   registerForm.get('email')?.invalid"
+            class="mt-2 text-sm text-red-400"
+          >
+            Enter a valid email.
+          </p>
+        </div>
+
+        <!-- PASSWORD -->
+
+        <div>
+          <label class="mb-3 block text-sm font-semibold text-slate-300">
+            Password
+          </label>
+
+          <div class="relative">
+
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Create Password"
+              class="neural-input pr-20"
+            />
+
+            <button
+              type="button"
+              (click)="togglePassword()"
+              class="absolute right-5 top-1/2 -translate-y-1/2 text-cyan-400"
+            >
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+
+          </div>
+        </div>
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div>
+          <label class="mb-3 block text-sm font-semibold text-slate-300">
+            Confirm Password
+          </label>
+
+          <div class="relative">
+
+            <input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              placeholder="Confirm Password"
+              class="neural-input pr-20"
+            />
+
+            <button
+              type="button"
+              (click)="toggleConfirmPassword()"
+              class="absolute right-5 top-1/2 -translate-y-1/2 text-cyan-400"
+            >
+              {{ showConfirmPassword ? 'Hide' : 'Show' }}
+            </button>
+
+          </div>
+        </div>
+
+        <div
+          *ngIf="errorMessage"
+          class="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-300"
+        >
+          {{ errorMessage }}
+        </div>
+
+        <div
+          *ngIf="successMessage"
+          class="rounded-xl border border-green-500/30 bg-green-500/10 p-4 text-green-300"
+        >
+          {{ successMessage }}
+        </div>
+
+        <button
+          type="submit"
+          class="ignite-button"
+        >
+          Create Neural Identity
+        </button>
+
+      </form>
+
+      <div class="mt-8 text-center text-slate-400">
+
+        Already have an account?
+
+        <a
+          routerLink="/login"
+          class="ml-2 font-semibold text-cyan-400 hover:text-cyan-300"
+        >
+          Sign In
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
