@@ -1,0 +1,22 @@
+.spotlight {
+
+  position: fixed;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: 2;
+
+  background:
+
+    radial-gradient(
+      500px circle
+      at var(--mouse-x)
+      var(--mouse-y),
+
+      rgba(0,255,255,.12),
+
+      transparent 40%
+    );
+}

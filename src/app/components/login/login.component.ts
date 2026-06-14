@@ -11,10 +11,12 @@ import { AuroraBackground } from '../../shared/components/aurora-background/auro
 import { ThemeToggleComponent } from '../../shared/components/theme-toggle/theme-toggle';
 
 import { FloatingParticlesComponent } from '../../shared/components/floating-particales/floating-particles.component';
+import { MouseSpotlightComponent } from '../../shared/components/mouse-spotlight/mouse-spotlight.component';
+import { TiltDirective } from '../../shared/directives/tilt.directives';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, AuroraBackground, ThemeToggleComponent, FloatingParticlesComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, AuroraBackground, ThemeToggleComponent, FloatingParticlesComponent, MouseSpotlightComponent, TiltDirective ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
