@@ -79,14 +79,16 @@
           {{ errorMessage }}
         </div>
 
-        <button
-          type="submit"
-          [disabled]="loginForm.invalid || authService.isLoading()"
-          class="ignite-button"
-        >
-          <span *ngIf="!authService.isLoading()"> 🚀 Initialize Neural Link </span>
+        <button type="submit" [disabled]="authService.isLoading()" class="ignite-button">
+          <div class="button-energy" [class.active]="buttonState !== 'idle'"></div>
 
-          <span *ngIf="authService.isLoading()"> Connecting... </span>
+          <span class="relative z-10">
+            {{ buttonText }}
+          </span>
+
+          <div *ngIf="buttonState !== 'idle'" class="progress-track">
+            <div class="progress-fill"></div>
+          </div>
         </button>
       </form>
 

@@ -16,7 +16,16 @@ import { TiltDirective } from '../../shared/directives/tilt.directives';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, AuroraBackground, ThemeToggleComponent, FloatingParticlesComponent, MouseSpotlightComponent, TiltDirective ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    AuroraBackground,
+    ThemeToggleComponent,
+    FloatingParticlesComponent,
+    MouseSpotlightComponent,
+    TiltDirective,
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
@@ -26,6 +35,10 @@ export class LoginComponent implements OnInit {
   showPassword = false;
 
   errorMessage = '';
+
+  buttonText = 'Initialize Neural Link';
+
+  buttonState: 'idle' | 'scanning' | 'authenticating' | 'linking' | 'success' = 'idle';
 
   constructor(
     private fb: FormBuilder,
@@ -49,16 +62,44 @@ export class LoginComponent implements OnInit {
 
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
+
       return;
     }
+
+    this.buttonState = 'scanning';
+
+    this.buttonText = 'Scanning Identity...';
+
+    setTimeout(() => {
+      this.buttonState = 'authenticating';
+
+      this.buttonText = 'Authenticating...';
+    }, 800);
+
+    setTimeout(() => {
+      this.buttonState = 'linking';
+
+      this.buttonText = 'Establishing Neural Link...';
+    }, 1600);
 
     const { email, password } = this.loginForm.getRawValue();
 
     this.authService.login(email, password).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']);
+        this.buttonState = 'success';
+
+        this.buttonText = '✓ ACCESS GRANTED';
+
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, 1200);
       },
+
       error: (error) => {
+        this.buttonState = 'idle';
+
+        this.buttonText = 'Initialize Neural Link';
+
         this.errorMessage = error?.message || 'Authentication failed';
       },
     });
