@@ -1,22 +1,15 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-theme-toggle',
   standalone: true,
   templateUrl: './theme-toggle.component.html',
-  styleUrl: './theme-toggle.component.css',
 })
 export class ThemeToggleComponent {
-
-  readonly darkMode =
-    signal(true);
+  readonly themeService = inject(ThemeService);
 
   toggleTheme(): void {
-
-    this.darkMode.update(v => !v);
-
-    document.documentElement.classList.toggle(
-      'dark'
-    );
+    this.themeService.toggleTheme();
   }
 }

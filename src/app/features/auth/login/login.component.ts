@@ -62,46 +62,47 @@ export class LoginComponent implements OnInit {
 
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-
       return;
     }
 
     this.buttonState = 'scanning';
-
     this.buttonText = 'Scanning Identity...';
 
     setTimeout(() => {
       this.buttonState = 'authenticating';
-
       this.buttonText = 'Authenticating...';
     }, 800);
 
     setTimeout(() => {
       this.buttonState = 'linking';
-
-      this.buttonText = 'Establishing Neural Link...';
+      this.buttonText = 'Creating Secure Session...';
     }, 1600);
 
-    const { email, password } = this.loginForm.getRawValue();
+    const { email, password, rememberMe } = this.loginForm.getRawValue();
 
-    this.authService.login(email, password).subscribe({
-      next: () => {
-        this.buttonState = 'success';
+    setTimeout(() => {
+      const result = this.authService.login({
+        email,
+        password,
+        rememberMe,
+      });
 
-        this.buttonText = '✓ ACCESS GRANTED';
-
-        setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 1200);
-      },
-
-      error: (error) => {
+      if (!result.success) {
         this.buttonState = 'idle';
-
         this.buttonText = 'Initialize Neural Link';
 
-        this.errorMessage = error?.message || 'Authentication failed';
-      },
-    });
+        this.errorMessage = result.message;
+
+        return;
+      }
+
+      this.buttonState = 'success';
+
+      this.buttonText = '✓ ACCESS GRANTED';
+
+      setTimeout(() => {
+        this.router.navigate(['/dashboard']);
+      }, 1200);
+    }, 2400);
   }
 }
