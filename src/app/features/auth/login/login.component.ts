@@ -4,15 +4,15 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 
-import { AuroraBackground } from '../../shared/components/aurora-background/aurora-background.component';
+import { AuroraBackground } from '../../../shared/components/aurora-background/aurora-background.component';
 
-import { ThemeToggleComponent } from '../../shared/components/theme-toggle/theme-toggle.component';
+import { ThemeToggleComponent } from '../../../shared/components/theme-toggle/theme-toggle.component';
 
-import { FloatingParticlesComponent } from '../../shared/components/floating-particles/floating-particles.component';
-import { MouseSpotlightComponent } from '../../shared/components/mouse-spotlight/mouse-spotlight.component';
-import { TiltDirective } from '../../shared/directives/tilt.directive';
+import { FloatingParticlesComponent } from '../../../shared/components/floating-particles/floating-particles.component';
+import { MouseSpotlightComponent } from '../../../shared/components/mouse-spotlight/mouse-spotlight.component';
+import { TiltDirective } from '../../../shared/directives/tilt.directive';
 @Component({
   selector: 'app-login',
   standalone: true,
