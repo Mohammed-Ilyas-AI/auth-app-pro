@@ -1,91 +1,100 @@
-<div class="login-wrapper">
+<app-aurora-background></app-aurora-background>
 
-    <div class="auth-card">
+<app-floating-particles></app-floating-particles>
 
-        <h1 class="title">
-            Welcome Back
+<app-theme-toggle></app-theme-toggle>
+
+<div class="relative z-10 flex min-h-screen items-center justify-center px-6">
+  <div class="neural-card w-full max-w-xl overflow-hidden">
+    <div class="glow-line"></div>
+
+    <div class="p-12">
+      <div class="mb-10 text-center">
+        <h1
+          class="orbitron text-6xl font-black tracking-widest bg-linear-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
+        >
+          AUTH PRO
         </h1>
 
-        <p class="subtitle">
-            Sign in to continue
-        </p>
+        <p class="mt-4 text-lg text-slate-300">Neural Identity Access</p>
+      </div>
 
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-8">
+        <!-- EMAIL -->
 
-            <!-- Email -->
+        <div>
+          <label class="mb-3 block text-sm font-semibold text-slate-300"> Email </label>
 
-            <div class="form-group">
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="you@example.com"
+            class="neural-input"
+          />
 
-                <label>Email</label>
-
-                <input class="auth-input" type="email" formControlName="email" placeholder="john@example.com" />
-
-                <small *ngIf="
-            loginForm.get('email')?.touched &&
-            loginForm.get('email')?.invalid
-          ">
-                    Please enter a valid email.
-                </small>
-
-            </div>
-
-            <!-- Password -->
-
-            <div class="form-group">
-
-                <label>Password</label>
-
-                <div class="password-wrapper">
-
-                    <input class="auth-input" [type]="showPassword ? 'text' : 'password'" formControlName="password"
-                        placeholder="Enter password" />
-
-                    <button type="button" class="toggle-btn" (click)="togglePassword()">
-                        {{ showPassword ? 'Hide' : 'Show' }}
-                    </button>
-
-                </div>
-
-                <small *ngIf="
-            loginForm.get('password')?.touched &&
-            loginForm.get('password')?.invalid
-          ">
-                    Password must be at least 8 characters.
-                </small>
-
-            </div>
-
-            <div *ngIf="errorMessage" class="error-box">
-                {{ errorMessage }}
-            </div>
-
-            <button type="submit" class="auth-btn login-btn" [disabled]="
-          loginForm.invalid ||
-          authService.isLoading()
-        ">
-
-                <span *ngIf="!authService.isLoading()">
-                    Sign In
-                </span>
-
-                <span *ngIf="authService.isLoading()">
-                    Signing In...
-                </span>
-
-            </button>
-
-        </form>
-
-        <div class="footer-link">
-
-            Don't have an account?
-
-            <a routerLink="/register">
-                Create one
-            </a>
-
+          <p
+            *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+            class="mt-2 text-sm text-red-400"
+          >
+            Enter a valid email address.
+          </p>
         </div>
 
-    </div>
+        <!-- PASSWORD -->
 
+        <div>
+          <label class="mb-3 block text-sm font-semibold text-slate-300"> Password </label>
+
+          <div class="relative">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Enter password"
+              class="neural-input pr-20"
+            />
+
+            <button
+              type="button"
+              (click)="togglePassword()"
+              class="absolute right-5 top-1/2 -translate-y-1/2 text-cyan-400 font-semibold"
+            >
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+
+          <p
+            *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+            class="mt-2 text-sm text-red-400"
+          >
+            Password must be at least 8 characters.
+          </p>
+        </div>
+
+        <div
+          *ngIf="errorMessage"
+          class="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-300"
+        >
+          {{ errorMessage }}
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid || authService.isLoading()"
+          class="ignite-button"
+        >
+          <span *ngIf="!authService.isLoading()"> 🚀 Initialize Neural Link </span>
+
+          <span *ngIf="authService.isLoading()"> Connecting... </span>
+        </button>
+      </form>
+
+      <div class="mt-8 text-center text-slate-400">
+        Don't have an account?
+
+        <a routerLink="/register" class="ml-2 font-semibold text-cyan-400 hover:text-cyan-300">
+          Create One
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

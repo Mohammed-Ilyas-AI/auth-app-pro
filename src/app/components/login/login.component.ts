@@ -6,10 +6,15 @@ import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 
+import { AuroraBackground } from '../../shared/components/aurora-background/aurora-background';
+
+import { ThemeToggleComponent } from '../../shared/components/theme-toggle/theme-toggle';
+
+import { FloatingParticlesComponent } from '../../shared/components/floating-particales/floating-particles.component';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, AuroraBackground, ThemeToggleComponent, FloatingParticlesComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
@@ -52,7 +57,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
-        this.errorMessage = error?.message || 'Login failed';
+        this.errorMessage = error?.message || 'Authentication failed';
       },
     });
   }
