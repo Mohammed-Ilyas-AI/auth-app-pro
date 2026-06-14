@@ -1,0 +1,105 @@
+.particles-container {
+
+  position: fixed;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+.particle {
+
+  position: absolute;
+
+  border-radius: 9999px;
+
+  background: rgba(255,255,255,.6);
+
+  filter: blur(2px);
+
+  animation:
+    floatParticle linear infinite;
+}
+
+.p1 {
+  width: 8px;
+  height: 8px;
+  left: 10%;
+  animation-duration: 12s;
+}
+
+.p2 {
+  width: 12px;
+  height: 12px;
+  left: 25%;
+  animation-duration: 16s;
+}
+
+.p3 {
+  width: 6px;
+  height: 6px;
+  left: 40%;
+  animation-duration: 18s;
+}
+
+.p4 {
+  width: 14px;
+  height: 14px;
+  left: 60%;
+  animation-duration: 15s;
+}
+
+.p5 {
+  width: 10px;
+  height: 10px;
+  left: 75%;
+  animation-duration: 17s;
+}
+
+.p6 {
+  width: 6px;
+  height: 6px;
+  left: 85%;
+  animation-duration: 20s;
+}
+
+.p7 {
+  width: 10px;
+  height: 10px;
+  left: 50%;
+  animation-duration: 14s;
+}
+
+.p8 {
+  width: 12px;
+  height: 12px;
+  left: 30%;
+  animation-duration: 13s;
+}
+
+@keyframes floatParticle {
+
+  from {
+    transform:
+      translateY(100vh);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: .6;
+  }
+
+  80% {
+    opacity: .6;
+  }
+
+  to {
+    transform:
+      translateY(-100px);
+    opacity: 0;
+  }
+}
